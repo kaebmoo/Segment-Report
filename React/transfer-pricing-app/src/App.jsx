@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Plus, Download, Upload, Table, FileText, X, Edit2, Save } from 'lucide-react';
 
-
 const TransferPricingApp = () => {
   // โหลดข้อมูลจาก localStorage เมื่อ component mount
   const [data, setData] = useState(() => {
@@ -192,15 +191,15 @@ const TransferPricingApp = () => {
   const allReceivers = [...new Set(data.map(d => d.serviceReceiver))].sort();
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
-      <div className="max-w-7xl mx-auto">
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+    <div className="min-h-screen bg-gray-50 text-gray-900 p-2 sm:p-4" style={{colorScheme: 'light'}}>
+      <div className="w-full">
+        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-4 sm:mb-6 text-gray-900">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-4 sm:mb-6 text-center">
             ระบบจัดการข้อมูล Transfer Pricing
           </h1>
           
           {/* Navigation */}
-          <div className="flex flex-wrap gap-2 mb-6 justify-center">
+          <div className="flex flex-wrap gap-2 mb-4 sm:mb-6 justify-center">
             <button
               onClick={() => setCurrentView('form')}
               className={`px-3 py-2 sm:px-4 text-xs sm:text-sm rounded-lg font-medium transition-colors ${
@@ -215,39 +214,43 @@ const TransferPricingApp = () => {
             </button>
             <button
               onClick={() => setCurrentView('list')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-3 py-2 sm:px-4 text-xs sm:text-sm rounded-lg font-medium transition-colors ${
                 currentView === 'list' 
                   ? 'bg-blue-600 text-white' 
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
             >
-              <FileText className="inline-block w-4 h-4 mr-2" />
-              รายการข้อมูล ({data.length})
+              <FileText className="inline-block w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">รายการข้อมูล ({data.length})</span>
+              <span className="sm:hidden">รายการ ({data.length})</span>
             </button>
             <button
               onClick={() => setCurrentView('crosstab')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-3 py-2 sm:px-4 text-xs sm:text-sm rounded-lg font-medium transition-colors ${
                 currentView === 'crosstab' 
                   ? 'bg-blue-600 text-white' 
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
             >
-              <Table className="inline-block w-4 h-4 mr-2" />
-              Crosstab
+              <Table className="inline-block w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">Crosstab</span>
+              <span className="sm:hidden">ตาราง</span>
             </button>
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
+              className="px-3 py-2 sm:px-4 text-xs sm:text-sm bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
             >
-              <Upload className="inline-block w-4 h-4 mr-2" />
-              นำเข้าข้อมูล
+              <Upload className="inline-block w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">นำเข้าข้อมูล</span>
+              <span className="sm:hidden">Import</span>
             </button>
             <button
               onClick={handleExport}
-              className="px-4 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-colors"
+              className="px-3 py-2 sm:px-4 text-xs sm:text-sm bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-colors"
             >
-              <Download className="inline-block w-4 h-4 mr-2" />
-              ส่งออกข้อมูล
+              <Download className="inline-block w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">ส่งออกข้อมูล</span>
+              <span className="sm:hidden">Export</span>
             </button>
           </div>
 
@@ -262,18 +265,18 @@ const TransferPricingApp = () => {
 
         {/* Form View */}
         {currentView === 'form' && (
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 text-gray-900">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">
               {editingIndex >= 0 ? 'แก้ไขข้อมูล' : 'เพิ่มข้อมูลใหม่'}
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">วันที่</label>
                 <input
                   type="date"
                   value={formData.date}
                   onChange={(e) => handleInputChange('date', e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
                   required
                 />
               </div>
@@ -283,7 +286,7 @@ const TransferPricingApp = () => {
                 <select
                   value={formData.serviceProvider}
                   onChange={(e) => handleInputChange('serviceProvider', e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
                   required
                 >
                   <option value="">เลือกหน่วยงาน</option>
@@ -298,7 +301,7 @@ const TransferPricingApp = () => {
                 <select
                   value={formData.serviceName}
                   onChange={(e) => handleInputChange('serviceName', e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
                   required
                 >
                   <option value="">เลือกบริการ</option>
@@ -315,7 +318,7 @@ const TransferPricingApp = () => {
                   step="0.01"
                   value={formData.price}
                   onChange={(e) => handleInputChange('price', e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
                   placeholder="0.00"
                 />
               </div>
@@ -325,7 +328,7 @@ const TransferPricingApp = () => {
                 <select
                   value={formData.serviceReceiver}
                   onChange={(e) => handleInputChange('serviceReceiver', e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
                   required
                 >
                   <option value="">เลือกหน่วยงาน</option>
@@ -342,16 +345,16 @@ const TransferPricingApp = () => {
                   step="0.01"
                   value={formData.quantity}
                   onChange={(e) => handleInputChange('quantity', e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
                   placeholder="0"
                   required
                 />
               </div>
 
-              <div className="sm:col-span-2 lg:col-span-3 flex flex-col sm:flex-row gap-2">
+              <div className="sm:col-span-2 xl:col-span-3 flex flex-col sm:flex-row gap-2">
                 <button
                   onClick={handleSubmit}
-                  className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                  className="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
                 >
                   <Save className="inline-block w-4 h-4 mr-2" />
                   {editingIndex >= 0 ? 'บันทึกการแก้ไข' : 'เพิ่มข้อมูล'}
@@ -370,7 +373,7 @@ const TransferPricingApp = () => {
                         quantity: ''
                       });
                     }}
-                    className="px-6 py-3 bg-gray-500 text-white rounded-lg font-medium hover:bg-gray-600 transition-colors"
+                    className="w-full sm:w-auto px-6 py-3 bg-gray-500 text-white rounded-lg font-medium hover:bg-gray-600 transition-colors"
                   >
                     <X className="inline-block w-4 h-4 mr-2" />
                     ยกเลิก
@@ -383,13 +386,12 @@ const TransferPricingApp = () => {
 
         {/* List View */}
         {currentView === 'list' && (
-          <div className="bg-white rounded-lg shadow-lg p-3 sm:p-6">
+          <div className="bg-white rounded-lg shadow-lg p-3 sm:p-6 text-gray-900">
             <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">รายการข้อมูลทั้งหมด</h2>
             {data.length === 0 ? (
               <p className="text-gray-500 text-center py-8">ยังไม่มีข้อมูล</p>
             ) : (
               <>
-                {/* Desktop View - แสดงเฉพาะหน้าจอใหญ่ */}
                 {/* Desktop View - แสดงเฉพาะหน้าจอใหญ่ */}
                 <div className="hidden lg:block overflow-x-auto">
                   <table className="w-full table-auto border-collapse">
@@ -418,17 +420,17 @@ const TransferPricingApp = () => {
                           <td className="border border-gray-300 px-4 py-2 text-center">
                             <button
                               onClick={() => handleEdit(index)}
-                              className="text-blue-600 hover:text-blue-800 mr-2"
+                              className="px-2 py-1 text-xs bg-blue-100 text-blue-700 border border-blue-300 rounded hover:bg-blue-200 mr-2"
                               title="แก้ไข"
                             >
-                              <Edit2 className="w-4 h-4" />
+                              แก้ไข
                             </button>
                             <button
                               onClick={() => handleDelete(index)}
-                              className="text-red-600 hover:text-red-800"
+                              className="px-2 py-1 text-xs bg-red-100 text-red-700 border border-red-300 rounded hover:bg-red-200"
                               title="ลบ"
                             >
-                              <X className="w-4 h-4" />
+                              ลบ
                             </button>
                           </td>
                         </tr>
@@ -442,13 +444,13 @@ const TransferPricingApp = () => {
                   {data.map((record, index) => (
                     <div key={record.id} className="border border-gray-200 rounded-lg p-4 bg-gray-50">
                       <div className="grid grid-cols-2 gap-2 text-sm">
-                        <div><span className="font-medium">วันที่:</span> {record.date}</div>
-                        <div><span className="font-medium">ราคา:</span> {record.price.toLocaleString()}</div>
-                        <div className="col-span-2"><span className="font-medium">ให้บริการ:</span> {record.serviceProvider}</div>
-                        <div className="col-span-2"><span className="font-medium">บริการ:</span> {record.serviceName}</div>
-                        <div className="col-span-2"><span className="font-medium">รับบริการ:</span> {record.serviceReceiver}</div>
-                        <div><span className="font-medium">จำนวน:</span> {record.quantity.toLocaleString()}</div>
-                        <div><span className="font-medium">ยอดรวม:</span> {record.totalAmount.toLocaleString()}</div>
+                        <div className="text-gray-900"><span className="font-medium text-gray-700">วันที่:</span> {record.date}</div>
+                        <div className="text-gray-900"><span className="font-medium text-gray-700">ราคา:</span> {record.price.toLocaleString()}</div>
+                        <div className="col-span-2 text-gray-900"><span className="font-medium text-gray-700">ให้บริการ:</span> {record.serviceProvider}</div>
+                        <div className="col-span-2 text-gray-900"><span className="font-medium text-gray-700">บริการ:</span> {record.serviceName}</div>
+                        <div className="col-span-2 text-gray-900"><span className="font-medium text-gray-700">รับบริการ:</span> {record.serviceReceiver}</div>
+                        <div className="text-gray-900"><span className="font-medium text-gray-700">จำนวน:</span> {record.quantity.toLocaleString()}</div>
+                        <div className="text-gray-900"><span className="font-medium text-gray-700">ยอดรวม:</span> {record.totalAmount.toLocaleString()}</div>
                       </div>
                       <div className="flex justify-end gap-2 mt-3">
                         <button
@@ -474,20 +476,20 @@ const TransferPricingApp = () => {
 
         {/* Crosstab View */}
         {currentView === 'crosstab' && (
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">ตารางแสดงข้อมูลแบบ Crosstab</h2>
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 text-gray-900">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">ตารางแสดงข้อมูลแบบ Crosstab</h2>
             {crosstabData.length === 0 ? (
               <p className="text-gray-500 text-center py-8">ยังไม่มีข้อมูลสำหรับแสดงผล</p>
             ) : (
               <div className="overflow-x-auto">
-                <table className="w-full table-auto border-collapse">
+                <table className="w-full table-auto border-collapse bg-white">
                   <thead>
                     <tr className="bg-gray-100">
-                      <th className="border border-gray-300 px-4 py-2 text-left">หน่วยงานให้บริการ</th>
-                      <th className="border border-gray-300 px-4 py-2 text-left">ชื่อบริการ</th>
-                      <th className="border border-gray-300 px-4 py-2 text-right">ราคา</th>
+                      <th className="border border-gray-300 px-4 py-2 text-left text-gray-800">หน่วยงานให้บริการ</th>
+                      <th className="border border-gray-300 px-4 py-2 text-left text-gray-800">ชื่อบริการ</th>
+                      <th className="border border-gray-300 px-4 py-2 text-right text-gray-800">ราคา</th>
                       {allReceivers.map(receiver => (
-                        <th key={receiver} className="border border-gray-300 px-4 py-2 text-right">
+                        <th key={receiver} className="border border-gray-300 px-4 py-2 text-right text-gray-800">
                           {receiver}
                         </th>
                       ))}
@@ -496,11 +498,11 @@ const TransferPricingApp = () => {
                   <tbody>
                     {crosstabData.map((row, index) => (
                       <tr key={index} className="hover:bg-gray-50">
-                        <td className="border border-gray-300 px-4 py-2">{row.serviceProvider}</td>
-                        <td className="border border-gray-300 px-4 py-2">{row.serviceName}</td>
-                        <td className="border border-gray-300 px-4 py-2 text-right">{row.price.toLocaleString()}</td>
+                        <td className="border border-gray-300 px-4 py-2 text-gray-900">{row.serviceProvider}</td>
+                        <td className="border border-gray-300 px-4 py-2 text-gray-900">{row.serviceName}</td>
+                        <td className="border border-gray-300 px-4 py-2 text-right text-gray-900">{row.price.toLocaleString()}</td>
                         {allReceivers.map(receiver => (
-                          <td key={receiver} className="border border-gray-300 px-4 py-2 text-right">
+                          <td key={receiver} className="border border-gray-300 px-4 py-2 text-right text-gray-900">
                             {row.receivers[receiver] ? row.receivers[receiver].toLocaleString() : '-'}
                           </td>
                         ))}
